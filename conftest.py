@@ -1,5 +1,6 @@
 from pytest import fixture
 from requests import Session
+from selenium import webdriver
 
 
 @fixture
@@ -22,7 +23,7 @@ def session_logged(email, password):
     session = Session()
 
     # Mimic navigating to the lading page
-    landing_page_resp = session.get(url='http://127.0.0.1:5000/')
+    session.get(url='http://127.0.0.1:5000/')
 
     # Login with a POST
     login_info = {
@@ -30,7 +31,13 @@ def session_logged(email, password):
         'password': password
     }
 
-    login_resp = session.post(url='http://127.0.0.1:5000/v1/login', data=login_info)
+    session.post(url='http://127.0.0.1:5000/v1/login', data=login_info)
 
     return session
 
+
+@fixture
+def browser():
+    driver = webdriver.Firefox()
+    yield driver
+    driver.quit()
