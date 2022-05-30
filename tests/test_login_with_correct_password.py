@@ -1,7 +1,7 @@
 from pytest import mark
 
 
-@mark.test
+@mark.logtest
 def test_login_with_request_and_browser(session_logged, browser, url):
     token = session_logged.cookies.get('token')
     browser.get(url)
